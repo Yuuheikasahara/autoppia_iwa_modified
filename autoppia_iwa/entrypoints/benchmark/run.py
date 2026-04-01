@@ -15,6 +15,7 @@ from autoppia_iwa.entrypoints.benchmark.utils.logging import setup_logging
 from autoppia_iwa.entrypoints.benchmark.utils.task_generation import get_projects_by_ids
 from autoppia_iwa.src.demo_webs.config import demo_web_projects
 from autoppia_iwa.src.web_agents import ApifiedWebAgent
+from autoppia_iwa.src.web_agents import ApifiedOneShotWebAgent
 
 # -----------------------------------------------------------------------------
 # Configuration — edit only this section
@@ -51,7 +52,7 @@ USE_CASES = [
 ]
 # Active agents to run.
 AGENTS = [
-    ApifiedWebAgent(base_url="http://localhost:6000", id="1", name="LocalAgent", timeout=120),
+    ApifiedOneShotWebAgent(base_url="http://localhost:6000", id="1", name="LocalAgent", timeout=120),
 ]
 
 # 2) Projects to evaluate (by id from demo_web_projects)
@@ -82,7 +83,7 @@ CFG = BenchmarkConfig(
     projects=get_projects_by_ids(demo_web_projects, PROJECT_IDS),
     agents=AGENTS,
     agent_target=AGENT_TARGET,
-    evaluator_mode="stateful",
+    evaluator_mode="concurrent",
     max_steps_per_task=50,
     use_cached_tasks=False,
     prompts_per_use_case=1,
